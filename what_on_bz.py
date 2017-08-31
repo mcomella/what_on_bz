@@ -29,9 +29,9 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def get_date_str():
+def get_date_str(daydelta):
     """Returns YYYY-MM-DD"""
-    seven_days_ago = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+    seven_days_ago = (datetime.now() - timedelta(days=daydelta)).strftime('%Y-%m-%d')
     return str(seven_days_ago)
 
 
@@ -44,9 +44,17 @@ def get_url_for_params(static_params, dynamic_params):
 args = parse_arguments()
 dynamic_params = {
     'email1': args.email,
-    'chfieldfrom': get_date_str()
+    'chfieldfrom': get_date_str(7)
 }
 
 print('PAST: ' + get_url_for_params(LAST_WEEK_PARAMS, dynamic_params))
 print('')  # newline.
 print('PRESENT: ' + get_url_for_params(PRESENT_PARAMS, dynamic_params))
+print('')  # newline
+
+dynamic_params['chfieldfrom'] = get_date_str(2)
+
+print('MIDWEEK PAST: ' + get_url_for_params(LAST_WEEK_PARAMS, dynamic_params))
+print('')  # newline.
+print('MIDWEEK PRESENT: ' + get_url_for_params(PRESENT_PARAMS, dynamic_params))
+print('')  # newline
